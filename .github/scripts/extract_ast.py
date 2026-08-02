@@ -250,7 +250,7 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                                 c_params = [extract_node_text(c, source_bytes) for c in c_params_node.children if c.is_named]
                             constructors.append({"params": c_params})
 
-                # Check preceding comment for class Javadoc
+                # Check preceding comment for class Javadoc, walking back past annotations
                 class_javadoc = ""
                 curr = node.prev_sibling
                 while curr:
@@ -259,10 +259,9 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                         if comm_text.startswith("/**"):
                             class_javadoc = comm_text
                         break
-                    elif curr.type in ('marker_annotation', 'annotation', 'modifiers'):
-                        curr = curr.prev_sibling
-                    else:
+                    elif curr.type in ('package_declaration', 'import_declaration', 'class_declaration', 'interface_declaration', 'enum_declaration'):
                         break
+                    curr = curr.prev_sibling
 
                 all_nodes.append({
                     "id": class_id,
@@ -308,7 +307,7 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                             if t_child.is_named:
                                 throws_list.append(extract_node_text(t_child, source_bytes))
 
-                # Check preceding comment for Javadoc, walking back past any annotations
+                # Check preceding comment for Javadoc, walking back past annotations
                 javadoc = ""
                 curr = node.prev_sibling
                 while curr:
@@ -317,10 +316,9 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                         if comm_text.startswith("/**"):
                             javadoc = comm_text
                         break
-                    elif curr.type in ('marker_annotation', 'annotation', 'modifiers'):
-                        curr = curr.prev_sibling
-                    else:
+                    elif curr.type in ('field_declaration', 'method_declaration', 'constructor_declaration', 'class_declaration'):
                         break
+                    curr = curr.prev_sibling
 
                 all_nodes.append({
                     "id": func_id,
