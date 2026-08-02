@@ -250,6 +250,20 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                                 c_params = [extract_node_text(c, source_bytes) for c in c_params_node.children if c.is_named]
                             constructors.append({"params": c_params})
 
+                # Check preceding comment for class Javadoc
+                class_javadoc = ""
+                curr = node.prev_sibling
+                while curr:
+                    if curr.type in ('block_comment', 'comment'):
+                        comm_text = extract_node_text(curr, source_bytes)
+                        if comm_text.startswith("/**"):
+                            class_javadoc = comm_text
+                        break
+                    elif curr.type in ('marker_annotation', 'annotation', 'modifiers'):
+                        curr = curr.prev_sibling
+                    else:
+                        break
+
                 all_nodes.append({
                     "id": class_id,
                     "type": "CLASS",
@@ -258,6 +272,8 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                     "annotations": class_annotations,
                     "fields": fields,
                     "constructors": constructors,
+                    "javadoc": class_javadoc,
+                    "docstring": class_javadoc,
                     "line_start": node.start_point[0] + 1,
                     "line_end": node.end_point[0] + 1
                 })
@@ -292,13 +308,19 @@ def process_java(tree, source_bytes, rel_path, all_nodes, all_edges):
                             if t_child.is_named:
                                 throws_list.append(extract_node_text(t_child, source_bytes))
 
-                # Check preceding comment for Javadoc
+                # Check preceding comment for Javadoc, walking back past any annotations
                 javadoc = ""
-                prev = node.prev_sibling
-                if prev and prev.type in ('block_comment', 'comment'):
-                    comm_text = extract_node_text(prev, source_bytes)
-                    if comm_text.startswith("/**"):
-                        javadoc = comm_text
+                curr = node.prev_sibling
+                while curr:
+                    if curr.type in ('block_comment', 'comment'):
+                        comm_text = extract_node_text(curr, source_bytes)
+                        if comm_text.startswith("/**"):
+                            javadoc = comm_text
+                        break
+                    elif curr.type in ('marker_annotation', 'annotation', 'modifiers'):
+                        curr = curr.prev_sibling
+                    else:
+                        break
 
                 all_nodes.append({
                     "id": func_id,
