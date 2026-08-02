@@ -88,62 +88,138 @@ public class Patient {
 
     // Getters and Setters
 
+    /**
+     * Gets the unique primary key ID of the patient.
+     * 
+     * @return The patient database ID.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets the unique primary key ID of the patient.
+     * 
+     * @param id The patient database ID to set.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets the full legal name of the patient.
+     * 
+     * @return Full name string.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the full legal name of the patient.
+     * 
+     * @param name Full name string (2 to 100 characters).
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the unique email address of the patient.
+     * 
+     * @return Patient email address string.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the unique email address of the patient.
+     * 
+     * @param email Unique email address string.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets the patient's age in years.
+     * 
+     * @return Age integer (0 to 150).
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Sets the patient's age in years.
+     * 
+     * @param age Age integer (0 to 150).
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     * Gets the patient's 10-digit phone number.
+     * 
+     * @return Phone number string.
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Sets the patient's 10-digit phone number.
+     * 
+     * @param phone 10-digit phone number string.
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Checks if the patient account is currently active.
+     * 
+     * @return True if patient is active, false if soft-deleted/deactivated.
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * Sets the active status flag for the patient.
+     * 
+     * @param active Active status boolean.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * Gets the optional medical history notes for the patient.
+     * 
+     * @return Medical history notes string, or null if none provided.
+     */
     public String getMedicalHistory() {
         return medicalHistory;
     }
 
+    /**
+     * Sets the optional medical history notes for the patient.
+     * 
+     * @param medicalHistory Medical history notes string (max 1000 characters).
+     */
     public void setMedicalHistory(String medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
 
+    /**
+     * Evaluates equality based on patient database ID and email address.
+     * 
+     * @param o Object to compare with this Patient.
+     * @return True if equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,11 +228,21 @@ public class Patient {
         return Objects.equals(id, patient.id) && Objects.equals(email, patient.email);
     }
 
+    /**
+     * Generates hash code based on patient ID and email.
+     * 
+     * @return Hash code integer.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, email);
     }
 
+    /**
+     * Returns string representation of the Patient entity.
+     * 
+     * @return Formatted string containing key Patient fields.
+     */
     @Override
     public String toString() {
         return "Patient{" +

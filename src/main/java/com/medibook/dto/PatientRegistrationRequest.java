@@ -34,9 +34,19 @@ public class PatientRegistrationRequest {
     @Size(max = 1000, message = "Medical history cannot exceed 1000 characters")
     private String medicalHistory;
 
+    /** Default no-argument constructor for JSON deserialization. */
     public PatientRegistrationRequest() {
     }
 
+    /**
+     * Parameterized constructor for creating a PatientRegistrationRequest DTO.
+     * 
+     * @param name Full patient name.
+     * @param email Unique patient email.
+     * @param age Patient age (0 to 150).
+     * @param phone 10-digit phone string.
+     * @param medicalHistory Optional medical history notes.
+     */
     public PatientRegistrationRequest(String name, String email, int age, String phone, String medicalHistory) {
         this.name = name;
         this.email = email;
@@ -45,42 +55,92 @@ public class PatientRegistrationRequest {
         this.medicalHistory = medicalHistory;
     }
 
+    /**
+     * Gets patient name.
+     * 
+     * @return Name string.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets patient name.
+     * 
+     * @param name Name string.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets patient email.
+     * 
+     * @return Email string.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets patient email.
+     * 
+     * @param email Email string.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets patient age.
+     * 
+     * @return Age integer.
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Sets patient age.
+     * 
+     * @param age Age integer.
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     * Gets 10-digit phone string.
+     * 
+     * @return Phone string.
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Sets 10-digit phone string.
+     * 
+     * @param phone Phone string.
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Gets medical history notes.
+     * 
+     * @return Medical history string.
+     */
     public String getMedicalHistory() {
         return medicalHistory;
     }
 
+    /**
+     * Sets medical history notes.
+     * 
+     * @param medicalHistory Medical history string.
+     */
     public void setMedicalHistory(String medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
